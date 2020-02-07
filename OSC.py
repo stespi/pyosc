@@ -1049,7 +1049,7 @@ class OSCClient(object):
 		if self.socket != None:
 			self.close()
 		self.socket = skt
-			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.sndbuf_size)
+		self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.sndbuf_size)
 		self._fd = self.socket.fileno()
 
 	def _ensureConnected(self, address):
