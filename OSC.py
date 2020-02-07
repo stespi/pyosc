@@ -974,7 +974,7 @@ class OSCClient(object):
 	# set outgoing socket buffer size
 	sndbuf_size = 4096 * 8
 
-	def __init__(self, server=None):
+	def __init__(self, server=None, Broadcast=True):
 		"""Construct an OSC Client.
 		When the 'address' argument is given this client is connected to a specific remote server.
 		  - address ((host, port) tuple): the address of the remote server to send all messages to
@@ -988,17 +988,20 @@ class OSCClient(object):
 
 		if server == None:
 			self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.sndbuf_size)
-			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+			if Broadcast:
+				self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+			else:
+				self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.sndbuf_size)
+
 			self._fd = self.socket.fileno()
 
 			self.server = None
 		else:
-			self.setServer(server)
+			self.setServer(server,Broadcast)
 
 		self.client_address = None
 
-	def setServer(self, server):
+	def setServer(self, server, Broadcast=True):
 		"""Associate this Client with given server.
 		The Client will send from the Server's socket.
 		The Server will use this Client instance to send replies.
@@ -1010,8 +1013,10 @@ class OSCClient(object):
 			self.close()
 
 		self.socket = server.socket.dup()
-		self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.sndbuf_size)
-		self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+		if Broadcast:
+			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+		else:
+			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.sndbuf_size)
 		self._fd = self.socket.fileno()
 
 		self.server = server
@@ -1798,7 +1803,6 @@ class OSCServer(UDPServer):
 		# force our socket upon the client
 		client.socket = self.socket.dup()
 		client.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, client.sndbuf_size)
-		client.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 		client._fd = client.socket.fileno()
 		client.server = self
 
