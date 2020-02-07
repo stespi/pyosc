@@ -1016,7 +1016,7 @@ class OSCClient(object):
 		#if Broadcast:
 		#	self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 		#else:
-			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.sndbuf_size)
+		self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.sndbuf_size)
 		self._fd = self.socket.fileno()
 
 		self.server = server
