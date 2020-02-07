@@ -1035,7 +1035,7 @@ class OSCClient(object):
 	# set outgoing socket buffer size
 	sndbuf_size = 4096 * 8
 
-	def __init__(self, server=None, Broadcast=True):
+	def __init__(self, server=None):
 		"""Construct an OSC Client.
 		  - server: Local OSCServer-instance this client will use the socket of for transmissions.
 		  If none is supplied, a socket will be created.
@@ -1049,9 +1049,6 @@ class OSCClient(object):
 		if self.socket != None:
 			self.close()
 		self.socket = skt
-		if Broadcast:
-			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-		else:
 			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.sndbuf_size)
 		self._fd = self.socket.fileno()
 
