@@ -12,14 +12,13 @@ PORT = 10023
 # msg.append(1234)
 # client.sendto(msg, (ADDRESS, PORT)) # note that the second arg is a tupple and not two arguments
 
-
 ## better practice ##
-client = OSC.OSCClient()
-client.connect( (ADDRESS, PORT) ) # note that the argument is a tupple and not two arguments
-msg = OSC.OSCMessage() #  we reuse the same variable msg used above overwriting it
-msg.setAddress("/print")
-msg.append(4321)
-client.send(msg) # now we dont need to tell the client the address anymore
+# client = OSC.OSCClient()
+# client.connect( (ADDRESS, PORT) ) # note that the argument is a tupple and not two arguments
+# msg = OSC.OSCMessage() #  we reuse the same variable msg used above overwriting it
+# msg.setAddress("/print")
+# msg.append(4321)
+# client.send(msg) # now we dont need to tell the client the address anymore
 
 ## in mode detail ##
 
