@@ -1,7 +1,7 @@
 import OSC
 import time, threading
 
-ADDRESS = '192.168.0.194'
+ADDRESS = '192.168.0.154'
 PORT = 10023
 
 # tupple with ip, port. i dont use the () but maybe you want -> send_address = ('127.0.0.1', 9000)
