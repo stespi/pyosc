@@ -1001,7 +1001,7 @@ class OSCClient(object):
 
 		self.client_address = None
 
-	def setServer(self, server, Broadcast=True):
+	def setServer(self, server):#, Broadcast=True
 		"""Associate this Client with given server.
 		The Client will send from the Server's socket.
 		The Server will use this Client instance to send replies.
@@ -1013,9 +1013,9 @@ class OSCClient(object):
 			self.close()
 
 		self.socket = server.socket.dup()
-		if Broadcast:
-			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-		else:
+		#if Broadcast:
+		#	self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+		#else:
 			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.sndbuf_size)
 		self._fd = self.socket.fileno()
 
