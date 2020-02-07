@@ -989,6 +989,7 @@ class OSCClient(object):
 		if server == None:
 			self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.sndbuf_size)
+			self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 			self._fd = self.socket.fileno()
 
 			self.server = None
@@ -1010,6 +1011,7 @@ class OSCClient(object):
 
 		self.socket = server.socket.dup()
 		self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, self.sndbuf_size)
+		self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 		self._fd = self.socket.fileno()
 
 		self.server = server
