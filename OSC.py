@@ -997,7 +997,7 @@ class OSCClient(object):
 
 			self.server = None
 		else:
-			self.setServer(server,Broadcast)
+			self.setServer(server)
 
 		self.client_address = None
 
